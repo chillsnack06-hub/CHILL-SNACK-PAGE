@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Chill Snack - Contacto</title>
+
+<style>
+.div1{
+  display: flex;
+  justify-content: center;
+  align-items: center;      
+  gap: 20px;                
+}
+
+.img{
+    width: 50px;
+    height: auto;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffe066;
+}
+
+/* HEADER */
+header {
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+header img {
+    width: 120px;
+}
+
+/* NAV */
+nav {
+    background-color: #ffb703;
+    text-align: center;
+    padding: 10px;
+}
+
+nav a {
+    margin: 15px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+/* CONTENIDO */
+.container {
+    text-align: center;
+    padding: 40px;
+}
+
+h2 {
+    color: #d62828;
+}
+
+/* FORMULARIO */
+form {
+    background: white;
+    display: inline-block;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+input, textarea {
+    width: 250px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #e63946;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* INFO */
+.info {
+    margin-top: 30px;
+}
+
+/* FOOTER */
+footer {
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="img/logo.png">
+    <h1>Chill Snack</h1>
+</header>
+
+<nav>
+    <a href="index.html">Inicio</a>
+    <a href="menu.html">Menú</a>
+    <a href="contacto2.html">Contacto</a>
+    <a href="carrito.html">Carrito 🛒</a>
+</nav>
+
+<div class="container">
+
+    <h2>Contáctanos 📩</h2>
+
+    <form onsubmit="enviarMensaje(event)">
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required><br>
+        <input type="email" id="correo" name="email" placeholder="Tu correo" required><br>
+        <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje" required></textarea><br>
+        <button type="submit">Enviar</button>
+    </form>
+    <div class="info">
+        <h3>📍 Ubicación</h3>
+        <p>Bacobampo, Sonora</p>
+
+        <h3>📞 Teléfono</h3>
+        <p>+52 642 269 2958</p>
+
+        <h3>💳 Pago</h3>
+        <p>BBVA: 4152 3143 4541 0024</p>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 Chill Snack</p>
+</footer>
+
+<script>
+
+async function enviarMensaje(event) {
+    event.preventDefault();
+
+    // 1. Obtenemos el formulario y el nombre para el alert
+    const formulario = event.target;
+    const nombre = document.getElementById("nombre").value;
+
+    // 2. Enviamos los datos al servicio de correo
+    // REEMPLAZA "tu_id_aqui" por el código que te dé Formspree
+    const respuesta = await fetch("https://formspree.io/f/mgopbyyw", {
+        method: "POST",
+        body: new FormData(formulario),
+        headers: { 'Accept': 'application/json' }
+    });
+
+    // 3. Si el envío fue exitoso, ejecutamos tu lógica original
+    if (respuesta.ok) {
+        alert("Gracias " + nombre + ", tu mensaje fue enviado 📩");
+        formulario.reset();
+    } else {
+        alert("Ups, hubo un problema al enviar el mensaje.");
+    }
+}
+
+</script>
+
+<div class="div1">
+   <a href="https://www.instagram.com/chill_snack06?igsh=dzdvbXk4ZmlyMXh2">
+   <img src="img/Instagram_icon.png" class="img"></a>
+   <a href="https://www.tiktok.com/@chill_snack06?_r=1&_t=ZS-95NXun72cG">
+   <img src="img/tiktok.png" class="img">
+   <a href="https://www.facebook.com/share/1AvLm14NkF/">
+   <img src="img/facebook.png" class="img"></a>
+   </a>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Chill Snack - Carrito</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffe066;
+}
+
+header {
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+header img {
+    width: 120px;
+}
+
+nav {
+    background-color: #ffb703;
+    text-align: center;
+    padding: 10px;
+}
+
+nav a {
+    margin: 15px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.container {
+    text-align: center;
+    padding: 30px;
+}
+
+.lista {
+    background: white;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 320px;
+    text-align: left;
+}
+
+.item {
+    margin: 10px 0;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.item strong {
+    color: #d62828;
+}
+
+button {
+    background-color: #e63946;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.total {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+input {
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+footer {
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="img/logo.png">
+    <h1>Chill Snack</h1>
+</header>
+
+<nav>
+    <a href="index.html">Inicio</a>
+    <a href="menu.html">Menú</a>
+    <a href="contacto2.html">Contacto</a>
+    <a href="carrito.html">Carrito 🛒</a>
+</nav>
+
+<div class="container">
+
+    <h2>Tu pedido 🛒</h2>
+
+    <div class="lista" id="listaCarrito"></div>
+
+    <div class="total" id="total"></div>
+
+    <h3>Hora de entrega ⏰</h3>
+    <input type="time" id="hora">
+
+    <br><br>
+
+        <button onclick="vaciarCarrito()">Vaciar carrito</button>
+
+</div>
+
+<footer>
+    <p>© 2026 Chill Snack</p>
+</footer>
+
+<script>
+function mostrarCarrito() {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let lista = document.getElementById("listaCarrito");
+    let total = 0;
+
+    lista.innerHTML = "";
+
+    carrito.forEach((item, index) => {
+
+        // Extraer precio correctamente
+        let match = item.match(/\$(\d+)/);
+        let precio = match ? parseInt(match[1]) : 0;
+        total += precio;
+
+        lista.innerHTML += `
+            <div class="item">
+                <strong>${item}</strong>
+                <br>
+                <button onclick="eliminar(${index})">Eliminar</button>
+            </div>
+        `;
+    });
+
+    document.getElementById("total").innerText = "Total: $" + total;
+}
+
+function eliminar(index) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.splice(index, 1);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    mostrarCarrito();
+}
+
+function vaciarCarrito() {
+    localStorage.removeItem("carrito");
+    mostrarCarrito();
+}
+
+function enviarPedido() {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let hora = document.getElementById("hora").value;
+
+    if (carrito.length === 0) {
+        alert("Tu carrito está vacío ❌");
+        return;
+    }
+
+    if (!hora) {
+        alert("Selecciona una hora de entrega ⏰");
+        return;
+    }
+
+    let mensaje = " *Pedido Chill Snack* %0A%0A";
+
+    carrito.forEach(item => {
+        mensaje += "• " + item + "%0A";
+    });
+
+    mensaje += "%0ATotal: $" + document.getElementById("total").innerText.replace("Total: $", "");
+    mensaje += "%0AHora de entrega: " + hora;
+
+ 
+    let telefono = "+52 642 269 2958";
+
+    let url = "https://wa.me/" + telefono + "?text=" + mensaje;
+
+    window.open(url, "_blank");
+}
+
+mostrarCarrito();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Chili Snack - Menú</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffe066;
+}
+
+header {
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+header img {
+    width: 120px;
+}
+
+nav {
+    background-color: #ffb703;
+    text-align: center;
+    padding: 10px;
+}
+
+nav a {
+    margin: 15px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.titulo {
+    text-align: center;
+    background-color: #e63946;
+    color: white;
+    display: inline-block;
+    padding: 10px 30px;
+    border-radius: 30px;
+    margin: 20px auto;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.columna {
+    width: 250px;
+    margin: 15px;
+}
+
+.columna h2 {
+    color: #d62828;
+}
+
+.item {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    background-color: #e63946;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="img/logo.png">
+    <h1>Chill Snack</h1>
+</header>
+
+<nav>
+    <a href="index.html">Inicio</a>
+    <a href="menu.html">Menú</a>
+    <a href="contacto2.html">Contacto</a>
+    <a href="carrito.html">Carrito 🛒</a>
+</nav>
+
+<center>
+<div class="titulo">MENÚ</div>
+</center>
+
+<div class="menu">
+
+<!-- ANTOJOS -->
+<div class="columna">
+<h2>Antojos</h2>
+
+<div class="item">Tostilocos <button onclick="add('Tostilocos',70,'Antojos', false)">$70</button></div>
+<div class="item">Dorilocos <button onclick="add('Dorilocos',80,'Antojos', false)">$80</button></div>
+<div class="item">Churros Locos <button onclick="add('Churros Locos',60,'Antojos', false)">$60</button></div>
+<div class="item">Pepihuates <button onclick="add('Pepihuates',50,'Antojos', false)">$50</button></div>
+<div class="item">Vaso Snack <button onclick="add('Vaso Snack',80,'Antojos', false)">$80</button></div>
+<div class="item">Tropical Crunch <button onclick="add('Tropical Crunch',80,'Antojos', false)">$80</button></div>
+<div class="item">Sabritoca <button onclick="add('Sabritoca',80,'Antojos', false)">$80</button></div>
+<div class="item">Mini donas <button onclick="add('Mini donas',55,'Antojos', false)">$55</button></div>
+<div class="item">Waffles <button onclick="add('Waffles',55,'Antojos', false)">$55</button></div>
+
+</div>
+
+<!-- FRESAS -->
+<div class="columna">
+<h2>Fresas</h2>
+
+<div class="item">Vaso mediano <button onclick="add('Vaso mediano',60,'Fresas', true)">$60</button></div>
+<div class="item">Vaso grande <button onclick="add('Vaso grande',80,'Fresas', true)">$80</button></div>
+<div class="item">Charola <button onclick="add('Charola',100,'Fresas', true)">$100</button></div>
+
+</div>
+
+<!-- FRAPPE -->
+<div class="columna">
+<h2>Frappe</h2>
+
+<div class="item">Oreo <button onclick="add('Oreo',65,'Frappe', false)">$65</button></div>
+<div class="item">Gansito <button onclick="add('Gansito',65,'Frappe', false)">$65</button></div>
+<div class="item">Nutella <button onclick="add('Nutella',65,'Frappe', false)">$65</button></div>
+
+</div>
+
+<!-- SABRITAS -->
+<div class="columna">
+<h2>Sabritas Preparadas</h2>
+
+<div class="item">Tostielotes <button onclick="add('Tostielotes',70,'Sabritas', false)">$70</button></div>
+<div class="item">Cheetoelote <button onclick="add('Cheetoelote',70,'Sabritas', false)">$70</button></div>
+<div class="item">Maruchan Elote <button onclick="add('Maruchan Elote',110,'Sabritas', false)">$110</button></div>
+<div class="item">Buldak Elote <button onclick="add('Buldak Elote',145,'Sabritas', false)">$145</button></div>
+
+</div>
+
+</div>
+
+<script>
+function add(producto, precio, seccion, permiteTopping) {
+
+    let detalleTopping = "No";
+
+    if (permiteTopping) {
+
+        let topping = confirm("¿Quieres agregar topping extra? (+$15)");
+
+        if (topping) {
+            let opcion = prompt("Escribe el topping: Oreo, Nutella, Gansito, etc.");
+
+            if (opcion) {
+                detalleTopping = "Sí (" + opcion + ")";
+            } else {
+                detalleTopping = "Sí";
+            }
+
+            precio += 15;
+        }
+    }
+
+    let item = seccion + " - " + producto + " ($" + precio + ") | Topping: " + detalleTopping;
+
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.push(item);
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    alert("Agregado 🛒\n" + item);
+}
+</script>
+
+</body>
+</html>
